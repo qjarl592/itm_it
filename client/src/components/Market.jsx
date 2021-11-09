@@ -3,7 +3,7 @@
 import { css, jsx } from '@emotion/react'
 import {WebDispatch} from "../App";
 import {useContext, useEffect, useState} from "react";
-import Asset from "./Asset";
+import AssetMarket from "./AssetMarket";
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { keywordState } from '../state/state';
 
@@ -80,7 +80,7 @@ const Market = ({history,accounts}) => {
 		<div css={market}>
 			<button onClick={onSubmit}>아이템 업로드하기</button>
 			{Object.keys(assets).map(key => ( 
-				<Asset asset={assets[key]}/>
+				<AssetMarket asset={assets[key]}/>
 			))}
 		</div>
 	)
