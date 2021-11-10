@@ -96,7 +96,7 @@ const Header = (props) => {
 	const search = (event)=>{
 		event.preventDefault();
 		setKeyword(keywordRef.current.value);
-		history.push("/market");
+		history.push("/");
 	}
 
 	return(

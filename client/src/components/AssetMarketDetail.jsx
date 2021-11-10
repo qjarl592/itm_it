@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
 import AssetBuyComplete from './AssetBuyComplete';
+import {WebDispatch} from "../App";
 import styled from "styled-components";
 
 const pinataSDK = require('@pinata/sdk');
@@ -109,9 +110,19 @@ const ModalContents__price = styled.div`
 	}
 `;
 
-const AssetMarketDetail = ({asset, isOpen, isUpdateDone, close, updateCheck}) => {
-	const buyToken = async (event) => {
+const AssetMarketDetail = ({asset, accounts, purchaseContract, isOpen, isUpdateDone, close, updateCheck}) => {
+	const {state, dispatch} = useContext(WebDispatch);
+
+	const buyToken = (event) => {
+		//구매 로직 작성
+		//purchase컨트랙트, 내 계좌, 토큰 id, 토큰 주인 계좌(메타)
+		//구매했으면 메타데이터 수정
+
+
+
 		console.log("buy is clicked!!")
+		console.log(state)
+
 		updateCheck()
 	};
 
@@ -126,16 +137,16 @@ const AssetMarketDetail = ({asset, isOpen, isUpdateDone, close, updateCheck}) =>
 						<h1>세부정보</h1>
 					</ModalContents__title>
 					<ModalContents__name>
-						<h2>제목 : {asset.asset.metadata.name}</h2>
+						<h2>제목 : {asset.metadata.name}</h2>
 					</ModalContents__name>
 					<ModalContents__author>
-						<h2>아티스트 : {asset.asset.metadata.keyvalues.author}</h2>
+						<h2>아티스트 : {asset.metadata.keyvalues.author}</h2>
 					</ModalContents__author>
 					<ModalContents__description>
-						<h2>설명 : {asset.asset.metadata.keyvalues.description}</h2>
+						<h2>설명 : {asset.metadata.keyvalues.description}</h2>
 					</ModalContents__description>
 					<ModalContents__price>
-						<h2>가격 : {asset.asset.metadata.keyvalues.price} ETH</h2>
+						<h2>가격 : {asset.metadata.keyvalues.price} ETH</h2>
 					</ModalContents__price>
 					<input type="button" id="buy" value="구매하기" onClick={buyToken}/>
 				</ModalContents>
