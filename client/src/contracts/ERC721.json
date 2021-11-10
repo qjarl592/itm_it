@@ -45149,12 +45149,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x6968aD7865Eaa7aA00C1e30db3e9C3f494161540",
-      "transactionHash": "0x6c3d56fe6e7f986eab4e918ec0deb6e28a26874c333afb927949f95390281356"
+      "address": "0x2b0C9E6a32b5DbcA9447E068cd7BEb1BdFD97eF0",
+      "transactionHash": "0x1f236b9f3dd3c79b7e7692aa5c6e422403e4bfe060fecbc286ddd664b9606916"
     }
   },
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-11-09T05:01:49.979Z",
+  "updatedAt": "2021-11-10T05:11:52.400Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including the Metadata extension, but not including the Enumerable extension, which is available separately as {ERC721Enumerable}.",

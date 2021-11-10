@@ -23,20 +23,11 @@ const asset = css`
 		width: 100%;
 	}
 `
-
-const pinataSDK = require('@pinata/sdk');
-const pinata = pinataSDK('2b7b1e2284f63479d880', '8a2fe76b94ecaddfc60194c0aae5b7820e09ee0b44fa2dfc757c7adbf82d21f6');
-const baseURL='https://gateway.pinata.cloud/ipfs/';
-
 const filter={
 	status: 'pinned',
 	metadata:{
 		name: '',
 		keyvalues: {
-			// state: {
-			// 	value: 'public',
-			// 	op: 'eq'
-			// },
 			show: {
 				value: 'y',
 				op: 'eq'
@@ -45,42 +36,30 @@ const filter={
 	}
 }
 
-const Market = ({history,accounts}) => {
+const Market = ({history,accounts,ERC721Contract,purchaseContract,pinata}) => {
 
 	// const keyword = useRecoilValue(keywordState)
 
-	const [keyword, setKeyword] = useRecoilState(keywordState)
+	const [keyword, setKeyword] = useRecoilState(keywordState) //검색 키워드
 	const {state, dispatch} = useContext(WebDispatch);
-	const [assets, setAssets] = useState({});
+	const [assets, setAssets] = useState({}); //마켓에서 보여지는 토큰들
 	// const [assets, setAssets] = useState();
 	//
 
 	useEffect(() => {
 		filter.metadata.name=keyword;
-		console.log(filter);
+		console.log(filter)
 		async function fetchPinned() {
 			const tokens = await pinata.pinList(filter);
 			setAssets(tokens.rows);
 		}
 		fetchPinned();
 	},[keyword]);
-	
-	const onSubmit = async () => {
-		const tokens = await pinata.pinList(filter);
-		console.log(tokens)
-		//state가 null일 경우에만 wallet으로 이동합니다.
-		console.log(`state :${state}`)
-		if(state){
-			history.push("/profile")
-		}else{
-			history.push("/wallet");
-		}
-	}
+
 	return (
 		<div css={market}>
-			<button onClick={onSubmit}>아이템 업로드하기</button>
 			{Object.keys(assets).map(key => ( 
-				<AssetMarket asset={assets[key]}/>
+				<AssetMarket asset={assets[key]} accounts={accounts} purchaseContract={purchaseContract} />
 			))}
 		</div>
 	)
