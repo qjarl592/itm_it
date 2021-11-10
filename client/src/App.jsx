@@ -34,7 +34,7 @@ const reducer = (state, action) =>{
 }
 
 const pinataSDK = require('@pinata/sdk');
-const pinataObj = pinataSDK('2b7b1e2284f63479d880', '8a2fe76b94ecaddfc60194c0aae5b7820e09ee0b44fa2dfc757c7adbf82d21f6');
+const pinataObj = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.REACT_APP_PINATA_SECRET_KEY);
 
 const App = () => {
     const initialState = null

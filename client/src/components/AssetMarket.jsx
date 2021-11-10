@@ -22,7 +22,6 @@ const asset = css`
 		}
 	}
 `
-const baseURL='https://gateway.pinata.cloud/ipfs/';
 
 const AssetMarket = ({asset, accounts, purchaseContract}) => {
 	console.log(asset)

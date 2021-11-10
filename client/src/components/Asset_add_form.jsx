@@ -3,9 +3,6 @@ import {WebDispatch} from "../App";
 import AssetAddFormComplete from './Asset_add_form_complete';
 import styled from "styled-components";
 
-const pinataSDK = require('@pinata/sdk');
-const pinata = pinataSDK('2b7b1e2284f63479d880', '8a2fe76b94ecaddfc60194c0aae5b7820e09ee0b44fa2dfc757c7adbf82d21f6');
-// const baseURL='https://gateway.pinata.cloud/ipfs/';
 const { create } = require('ipfs-http-client');
 const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' });
 
@@ -122,7 +119,7 @@ const ModalContents__price = styled.div`
 	}
 `;
 
-const AssetAddForm = ({contract, accounts, isOpen, isMintDone, close, mintCheck}) => {
+const AssetAddForm = ({contract, accounts, isOpen, isMintDone, close, mintCheck, pinata}) => {
 	//console.log(contract, accounts);
 	const [audioBuffer, setAudioBuffer] = useState();
 	const [imageBuffer, setImageBuffer] = useState();
