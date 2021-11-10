@@ -78,7 +78,7 @@ const App = () => {
             <Router>
                 <Switch>
                         <Layout>
-                            <Route exact path="/market" render ={
+                            <Route exact path="/" render ={
                                 props =>  <Market {...props}/>}>
                             </Route>
                             <Route exact path="/profile" render={
