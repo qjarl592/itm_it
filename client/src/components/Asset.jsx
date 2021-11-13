@@ -23,7 +23,7 @@ const assetStyle = css`
 	}
 `
 
-const Asset = ({asset, contract}) => {
+const Asset = ({asset, contract, pinata}) => {
 	const baseURL = 'https://gateway.pinata.cloud/ipfs/';
 	const [isModalOpen, setIsModalOpen] = useState(false); //모달창이 열렸는가?
 	const [isUpdateDone, setIsUpdateDone] = useState(false); //구매완료가 되었는가?
@@ -44,7 +44,7 @@ const Asset = ({asset, contract}) => {
 	return (
 		<li css={assetStyle} className="asset">
 			<img src={asset.metadata.keyvalues.image} alt="asset" onClick={openModal}/>
-			<AssetModal asset={asset} contract={contract} isOpen={isModalOpen} close={closeModal} updateCheck = {updateComplete}/>
+			<AssetModal asset={asset} contract={contract} isOpen={isModalOpen} close={closeModal} pinata={pinata}/>
 			<div className="info">
 				<h2>{asset.metadata.name}</h2>
 				<audio controls>
