@@ -1,7 +1,7 @@
 /** @jsx jsx */
+import React from 'react';
 import { css, jsx } from '@emotion/react'
-import {WebDispatch} from "../App";
-import {useContext, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import Asset from "./Asset";
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { accountState, keywordState } from '../state/state';
@@ -34,7 +34,6 @@ const filter={
 		}
 	}
 }
-
 const Market = ({history,contract,pinata}) => {
 
 	const account = useRecoilValue(accountState)

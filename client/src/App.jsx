@@ -40,7 +40,6 @@ const pinataObj = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.RE
 
 const App = () => {
     const [account, setAccount] = useRecoilState(accountState);
-    // const [accounts, setAccounts] = useState();
     const [ERC721Contract, setERC721Contract] = useState();
     const [pinata, setPinata] = useState(pinataObj)
 

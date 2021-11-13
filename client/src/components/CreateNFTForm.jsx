@@ -52,9 +52,8 @@ const CreateNftForm = ({isModalOpen, closeModal, setFlag, contract, pinata}) => 
     const priceRef= useRef();
 
     const createToken = async () => {
-        console.log('click')
-        const myImageResult = await ipfs.add(imageBuffer);
-        await pinata.pinByHash(myImageResult.path);
+        const myImageResult=await ipfs.add(imageBuffer);
+        await console.log(pinata.pinByHash(myImageResult.path));
 
         const options={
             pinataMetadata: {

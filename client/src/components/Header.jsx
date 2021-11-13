@@ -1,8 +1,8 @@
-import React, { useRef } from 'react'
 /** @jsx jsx */
-import {css, jsx} from '@emotion/react'
+import React, { useRef } from 'react'
+import {css, jsx } from '@emotion/react'
 import { useHistory } from 'react-router-dom'
-import { useRecoilState } from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import {accountState, keywordState} from '../state/state';
 
 const header= css`
@@ -71,32 +71,34 @@ const button =css`
 	background-color: white;
 `
 
-const Header = (props) => {
+const Header = () => {
 
-	const [accounts, setAccounts] = useRecoilState(accountState);
+	const account = useRecoilValue(accountState);
 	const [keyword, setKeyword] = useRecoilState(keywordState)
 	const keywordRef = useRef()
 
 	let history= useHistory();
 	const goProfile=()=>{
-		if(accounts){
+		if(account){
 			history.push("/profile")
 		}else{
 			history.push("/wallet");
 		}
 	}
 
-	const search = (event)=>{
+	const search = (event) => {
 		event.preventDefault();
 		setKeyword(keywordRef.current.value);
 		history.push("/");
-	}
+	};
+
+	const onLogo = () => {
+		history.push("/")
+	};
 
 	return(
 		<div css={header} className="app-header">
-			<a href="" css={logo} className="logo_default">
-				<img src="images/Logo.png" alt="" />
-			</a>
+			<img src="images/Logo.png" alt="" onClick={onLogo} />
 			<div css={searchWindow}>
 				<img src="images/SVG/Search.svg" alt="" onClick={search}/>
 				<input ref ={keywordRef} id="input" type="text" />
@@ -107,10 +109,6 @@ const Header = (props) => {
 			</ul>
 		</div>
 	)
-
-	
-	
-			
 };
 
 export default Header

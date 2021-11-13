@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import {css,jsx} from "@emotion/react";
-import React, { useContext } from 'react';
-import {WebDispatch} from "../App";
+import React from 'react';
 import {useRecoilState} from "recoil";
 import {accountState} from "../state/state";
 import Modal from 'react-modal';
@@ -31,11 +30,7 @@ const AssetModal = ({asset, contract, pinata, isOpen, close}) => {
 	const [account, setAccount] = useRecoilState(accountState);
 
 	const buyToken = async () => {
-		//구매 로직 작성
-		//purchase컨트랙트, 내 계좌, 토큰 id, 토큰 주인 계좌(메타)
-		//구매했으면 메타데이터 수정
-		console.log("buy is clicked!!")
-		
+		console.log("buy is clicked!!")		
 		console.log('account : ', account)
 		const seller = asset.metadata.keyvalues.account
 		console.log('seller : ', seller)
