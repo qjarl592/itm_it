@@ -52,7 +52,7 @@ const AssetModal = ({asset, contract, pinata, isOpen, close}) => {
 			}
 		}
 		await pinata.hashMetadata(asset.ipfs_pin_hash, updateAccount)
-
+		close()
 	};
 
 
