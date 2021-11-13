@@ -1,14 +1,10 @@
 /** @jsx jsx */
 import {css,jsx} from "@emotion/react";
 import React, { useContext } from 'react';
-import AssetBuyComplete from './AssetBuyComplete';
 import {WebDispatch} from "../App";
-
 import Modal from 'react-modal';
-import './AssetMarketDetail.css';
+import './AssetModal.css';
 import {Colors} from "../colors/Colors";
-
-const pinataSDK = require('@pinata/sdk');
 
 const customStyles = {
 	content: {
@@ -29,19 +25,9 @@ const purchaseButton = css`
 	height: 4vh;
 `
 
-const modalOverlay = css`
-	position: fixed;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background-color: rgba(0, 0, 0, 0.6);
-	z-index: 999;
-`
-
-const AssetMarketDetail = ({asset, accounts, purchaseContract, isOpen, isUpdateDone, close, updateCheck}) => {
+const AssetModal = ({asset, accounts, contract, purchaseContract, isOpen, isUpdateDone, close, updateCheck}) => {
 	const {state, dispatch} = useContext(WebDispatch);
-
+	console.log(contract);
 	const buyToken = () => {
 		//구매 로직 작성
 		//purchase컨트랙트, 내 계좌, 토큰 id, 토큰 주인 계좌(메타)
@@ -55,7 +41,6 @@ const AssetMarketDetail = ({asset, accounts, purchaseContract, isOpen, isUpdateD
 	return (
 		<Modal
 			overlayClassName="overlay"
-			// className="customModal"
 			isOpen={isOpen}
 			style={customStyles}
 			onRequestClose={close}
@@ -71,4 +56,4 @@ const AssetMarketDetail = ({asset, accounts, purchaseContract, isOpen, isUpdateD
 	)
 }
 Modal.setAppElement('#root')
-export default AssetMarketDetail;
+export default AssetModal;

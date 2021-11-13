@@ -1,42 +1,44 @@
 import React from 'react';
-import {WebDispatch} from "../App";
-import {useContext, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
+import CreateNftForm from "./CreateNFTForm";
+import {useRecoilState} from "recoil";
+import {accountState} from "../state/state";
+import Asset from "./Asset";
 
-const pinataSDK = require('@pinata/sdk');
-const pinata = pinataSDK('2b7b1e2284f63479d880', '8a2fe76b94ecaddfc60194c0aae5b7820e09ee0b44fa2dfc757c7adbf82d21f6');
-
-const Profile = ({accounts, contract}) => {
+const Profile = ({contract, pinata}) => {
 	const [myAssets, setMyAssets]=useState({});
-	const {state, dispatch} = useContext(WebDispatch);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [accounts, setAccounts] = useRecoilState(accountState);
 
 	useEffect(() => {
-		const myAccount = accounts[0];
 		const filter = {
 			status: 'pinned',
 			metadata: {
 				keyvalues: {
-					show: {
-						value: 'y',
-						op: 'eq'
-					},
 					account: {
-						value: myAccount,
+						value: accounts.toString(),
 						op: 'eq'
 					}
 				}
 			}
 		}
-		async function fetchPinned() {
-			const tokens = await pinata.pinList(filter);
-			setMyAssets(tokens.rows);
-		}
-		fetchPinned();
-	},[]);
+		const tokens = pinata.pinList(filter);
+		setMyAssets(tokens.rows);
+	},[accounts]);
 
+	const openModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+	};
+	console.log(myAssets);
 	return(
 		<div>
-			{/*<Modalbutton contract={contract} accounts={accounts}/>*/}
-			{/*{Object.keys(myAssets).map(key => ( */}
+			<button onClick={openModal}>NFT 생성하기</button>
+			<CreateNftForm isModalOpen={isModalOpen} closeModal={closeModal} accounts={accounts} contract={contract} pinata={pinata}/>
+			{/*{Object.keys(myAssets).map(key => (*/}
 			{/*	<Asset asset={myAssets[key]}/>*/}
 			{/*))};*/}
 		</div>

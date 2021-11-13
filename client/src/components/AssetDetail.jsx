@@ -1,12 +1,7 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import AssetAddFormComplete from './Asset_add_form_complete';
 import styled from "styled-components";
 
-const pinataSDK = require('@pinata/sdk');
-const pinata = pinataSDK('2b7b1e2284f63479d880', '8a2fe76b94ecaddfc60194c0aae5b7820e09ee0b44fa2dfc757c7adbf82d21f6');
-// const baseURL='https://gateway.pinata.cloud/ipfs/';
-const { create } = require('ipfs-http-client');
-const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' });
 
 const Modal = styled.div`
 	position: fixed;
@@ -21,19 +16,18 @@ const ModalContainer = styled.div`
 	width: 750px;
 	max-height: 90vh;
 	overflow-y: auto;
-	background-color: white;
 	position: relative;
 	box-sizing: border-box;
 	margin: 50px auto;
 	padding: 20px;
-	background: #fff;   
+	background: #fff;
 
 	span:nth-child(1) {
-		cursor : pointer;
+		cursor: pointer;
 	}
 
 	#create {
-		cursor : pointer;
+		cursor: pointer;
 	}
 `
 
@@ -109,7 +103,7 @@ const ModalContents__price = styled.div`
 	}
 `;
 
-const AssetDetail = ({asset, isOpen, isUpdateDone, close, updateCheck}) => {
+const AssetDetail = ({asset, isOpen, isUpdateDone, close, updateCheck, pinata}) => {
 	const titleRef= useRef();
 	const authorRef = useRef();
 	const descriptionRef= useRef();

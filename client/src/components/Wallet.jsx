@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react'
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {WebDispatch} from "../App";
 import {useHistory} from "react-router-dom";
 
@@ -20,13 +20,13 @@ const walletStyle =css`
   }
 `
 
-const Wallet = ({handleWeb}) => {
+const Wallet = ({connectWeb3}) => {
     const history = useHistory();
     console.log(history);
     const {state, dispatch} = useContext(WebDispatch);
     const onSubmit = async (event)=>{
         event.preventDefault();
-        await handleWeb();
+        await connectWeb3();
         history.push("/market");
     }
     return(
