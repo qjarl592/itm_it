@@ -8,7 +8,7 @@ import Asset from "./Asset";
 const Profile = ({contract, pinata}) => {
 	const [myAssets, setMyAssets]=useState({});
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [accounts, setAccounts] = useRecoilState(accountState);
+	const [account, setAccount] = useRecoilState(accountState);
 
 	useEffect(() => {
 		const filter = {
@@ -16,7 +16,7 @@ const Profile = ({contract, pinata}) => {
 			metadata: {
 				keyvalues: {
 					account: {
-						value: accounts.toString(),
+						value: account.toString(),
 						op: 'eq'
 					}
 				}
@@ -24,7 +24,7 @@ const Profile = ({contract, pinata}) => {
 		}
 		const tokens = pinata.pinList(filter);
 		setMyAssets(tokens.rows);
-	},[accounts]);
+	},[account]);
 
 	const openModal = () => {
 		setIsModalOpen(true);
@@ -33,11 +33,11 @@ const Profile = ({contract, pinata}) => {
 	const closeModal = () => {
 		setIsModalOpen(false);
 	};
-	console.log(myAssets);
+
 	return(
 		<div>
 			<button onClick={openModal}>NFT 생성하기</button>
-			<CreateNftForm isModalOpen={isModalOpen} closeModal={closeModal} accounts={accounts} contract={contract} pinata={pinata}/>
+			<CreateNftForm isModalOpen={isModalOpen} closeModal={closeModal} contract={contract} pinata={pinata}/>
 			{/*{Object.keys(myAssets).map(key => (*/}
 			{/*	<Asset asset={myAssets[key]}/>*/}
 			{/*))};*/}

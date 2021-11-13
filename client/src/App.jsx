@@ -39,8 +39,7 @@ const pinataSDK = require('@pinata/sdk');
 const pinataObj = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.REACT_APP_PINATA_SECRET_KEY);
 
 const App = () => {
-    const [accounts, setAccounts] = useRecoilState(accountState);
-    // const [accounts, setAccounts] = useState();
+    const [account, setAccount] = useRecoilState(accountState);
     const [ERC721Contract, setERC721Contract] = useState();
     const [purchaseContract, setPurchaseContract] = useState();
     const [pinata, setPinata] = useState(pinataObj)
@@ -64,7 +63,8 @@ const App = () => {
                 deployedNetwork && deployedNetwork.address
             )
             setPurchaseContract(purchase);
-            setAccounts(accounts);
+            const myAccount = accounts[0]
+            setAccount(myAccount);
             setERC721Contract(ERC721);
         }catch(error){
             console.log(error);
@@ -80,7 +80,7 @@ const App = () => {
                 <Switch>
                         <Layout>
                             <Route exact path="/" render ={
-                                props =>  <Market {...props} accounts={accounts} contract={ERC721Contract} purchaseContract={purchaseContract} pinata={pinata}  />}>
+                                props =>  <Market {...props} contract={ERC721Contract} purchaseContract={purchaseContract} pinata={pinata}  />}>
                             </Route>
                             <Route exact path="/profile" render={
                                 props => <Profile {...props} contract={ERC721Contract} purchaseContract={purchaseContract} pinata={pinata}/>} />

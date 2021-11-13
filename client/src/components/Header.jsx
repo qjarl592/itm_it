@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
 /** @jsx jsx */
-import {css} from '@emotion/react'
+import React, { useRef } from 'react'
+import {css, jsx } from '@emotion/react'
 import { useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil';
 import {accountState, keywordState} from '../state/state';
@@ -71,7 +71,7 @@ const button =css`
 	background-color: white;
 `
 
-const Header = (props) => {
+const Header = () => {
 
 	const [accounts, setAccounts] = useRecoilState(accountState);
 	const [keyword, setKeyword] = useRecoilState(keywordState)

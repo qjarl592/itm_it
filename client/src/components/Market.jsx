@@ -1,7 +1,7 @@
 /** @jsx jsx */
+import React from 'react';
 import { css, jsx } from '@emotion/react'
-import {WebDispatch} from "../App";
-import {useContext, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import Asset from "./Asset";
 import { useRecoilState } from 'recoil';
 import { keywordState } from '../state/state';
@@ -35,7 +35,7 @@ const filter={
 	}
 }
 
-const Market = ({history,accounts,contract,purchaseContract,pinata}) => {
+const Market = ({history,contract,purchaseContract,pinata}) => {
 
 	const [keyword, setKeyword] = useRecoilState(keywordState) //검색 키워드
 	const [assets, setAssets] = useState({}); //마켓에서 보여지는 토큰들
@@ -52,7 +52,7 @@ const Market = ({history,accounts,contract,purchaseContract,pinata}) => {
 	return (
 		<div css={market}>
 			{Object.keys(assets).map(key => (
-				<Asset asset={assets[key]} accounts={accounts} contract={contract} purchaseContract={purchaseContract} />
+				<Asset asset={assets[key]} contract={contract} purchaseContract={purchaseContract} />
 			))}
 		</div>
 	)
