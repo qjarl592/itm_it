@@ -5,7 +5,6 @@ import {useRecoilState} from "recoil";
 import {accountState} from "../state/state";
 import Modal from 'react-modal';
 import Asset from "./Asset";
-import { set } from 'react-hook-form';
 
 const Profile = ({contract, pinata}) => {
 	const [myAssets, setMyAssets]=useState({});
