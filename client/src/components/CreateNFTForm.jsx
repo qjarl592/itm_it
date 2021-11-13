@@ -53,7 +53,7 @@ const CreateNftForm = ({isModalOpen, closeModal, accounts, contract, pinata}) =>
 
     const createToken = async () => {
         const myImageResult=await ipfs.add(imageBuffer);
-        await pinata.pinByHash(myImageResult.path);
+        await console.log(pinata.pinByHash(myImageResult.path));
 
         const options={
             pinataMetadata: {
@@ -73,7 +73,7 @@ const CreateNftForm = ({isModalOpen, closeModal, accounts, contract, pinata}) =>
         const myAssetResult=await ipfs.add(audioBuffer);
         const pinataResult = await pinata.pinByHash(myAssetResult.path, options);
 
-        await contract.methods.mint(accounts[0], pinataResult.ipfsHash).send({ from: accounts[0] });
+        await contract.methods.mint(account, pinataResult.ipfsHash).send({ from: account });
     };
 
     return(
