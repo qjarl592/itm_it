@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
 /** @jsx jsx */
-import AssetDetail from './AssetDetail';
-import { css, jsx } from '@emotion/react'
+import AssetModal from './AssetModal';
+import { css } from '@emotion/react'
 
 const asset = css`
 	list-style: none;
@@ -22,30 +22,14 @@ const asset = css`
 		}
 	}
 `
-const like = css `
-	display: flex;
-	align-items: center;
-`
 
-const heartCount= css`
-	font-size: 0.6rem;
-`
-const heart =css`
-	background-color: white;
-	color: white;
-	border: none;
-`
-
-const baseURL='https://gateway.pinata.cloud/ipfs/';
-
-const Asset = (props) => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [isUpdateDone, setIsUpdateDone] = useState(false);
+const Asset = ({asset, accounts, purchaseContract, contract}) => {
+	const baseURL = 'https://gateway.pinata.cloud/ipfs/';
+	const [isModalOpen, setIsModalOpen] = useState(false); //모달창이 열렸는가?
+	const [isUpdateDone, setIsUpdateDone] = useState(false); //구매완료가 되었는가?
   
 	const openModal = () => {
-	  console.log("click");
 	  setIsModalOpen(true);
-	  setIsUpdateDone(false)
 	};
   
 	const closeModal = () => {
@@ -57,21 +41,16 @@ const Asset = (props) => {
 	  setIsUpdateDone(true);
 	};
  
-	console.log(props.asset.metadata.keyvalues.image);
 	return (
 		<li css={asset} className="asset">
-			<div css={like}>
-				<button css={heart}><img css={heart} src="/images/heart.png" alt="heart"/></button>
-				<h2 css={heartCount}>5</h2>
-			</div>
-			<img src={props.asset.metadata.keyvalues.image} alt="asset" onClick={openModal}/>
-			<AssetDetail asset={props} isOpen={isModalOpen} isUpdateDone = {isUpdateDone} close={closeModal} updateCheck = {updateComplete}/>
+			<img src={asset.metadata.keyvalues.image} alt="asset" onClick={openModal}/>
+			<AssetModal asset={asset} contract={contract} accounts={accounts} purchaseContract={purchaseContract} isOpen={isModalOpen} isUpdateDone = {isUpdateDone} close={closeModal} updateCheck = {updateComplete}/>
 			<div className="info">
-				<h2>{props.asset.metadata.name}</h2>
+				<h2>{asset.metadata.name}</h2>
 				<audio controls>
-					<source src={baseURL+props.asset.ipfs_pin_hash}></source>
+					<source src={baseURL+asset.ipfs_pin_hash}/>
 				</audio>
-				<h3>{props.asset.metadata.keyvalues.price} ETH</h3>
+				<h3>{asset.metadata.keyvalues.price} ETH</h3>
 			</div>
 		</li>
 	)
