@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 /** @jsx jsx */
-import {css} from '@emotion/react'
+import {css, jsx} from '@emotion/react'
 import { useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil';
 import {accountState, keywordState} from '../state/state';

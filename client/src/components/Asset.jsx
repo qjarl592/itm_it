@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 /** @jsx jsx */
 import AssetModal from './AssetModal';
-import { css } from '@emotion/react'
+import { css, jsx } from '@emotion/react'
 
-const asset = css`
+const assetStyle = css`
 	list-style: none;
 	width: 230px;
 	height: 350px;
@@ -23,7 +23,7 @@ const asset = css`
 	}
 `
 
-const Asset = ({asset, accounts, purchaseContract, contract}) => {
+const Asset = ({asset, contract}) => {
 	const baseURL = 'https://gateway.pinata.cloud/ipfs/';
 	const [isModalOpen, setIsModalOpen] = useState(false); //모달창이 열렸는가?
 	const [isUpdateDone, setIsUpdateDone] = useState(false); //구매완료가 되었는가?
@@ -42,9 +42,9 @@ const Asset = ({asset, accounts, purchaseContract, contract}) => {
 	};
  
 	return (
-		<li css={asset} className="asset">
+		<li css={assetStyle} className="asset">
 			<img src={asset.metadata.keyvalues.image} alt="asset" onClick={openModal}/>
-			<AssetModal asset={asset} contract={contract} accounts={accounts} purchaseContract={purchaseContract} isOpen={isModalOpen} isUpdateDone = {isUpdateDone} close={closeModal} updateCheck = {updateComplete}/>
+			<AssetModal asset={asset} contract={contract} isOpen={isModalOpen} close={closeModal} updateCheck = {updateComplete}/>
 			<div className="info">
 				<h2>{asset.metadata.name}</h2>
 				<audio controls>
