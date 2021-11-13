@@ -7,7 +7,7 @@ const Modal = styled.div`
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background: rgba(0, 0, 0, 0.6);   
+	background: rgba(0, 0, 0, 0.6);
 `
 
 const ModalContainer = styled.div`
@@ -19,7 +19,7 @@ const ModalContainer = styled.div`
 	box-sizing: border-box;
 	margin: 50px auto;
 	padding: 20px;
-	background: #fff;   
+	background: #fff;
 
 	span:nth-child(1) {
 		cursor : pointer;
@@ -50,7 +50,7 @@ const ModalContents = styled.form`
 		padding: 15px;
 		border : none;
 		border-radius : 10px;
-        cursor : pointer; 
+        cursor : pointer;
 	}
 `
 
@@ -67,7 +67,7 @@ const AssetBuyComplete = ({close}) => {
 			</ModalContainer>
 		</Modal>
 	)
-	
+
 }
 
 export default AssetBuyComplete;
