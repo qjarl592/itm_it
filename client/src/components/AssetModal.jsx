@@ -26,15 +26,28 @@ const purchaseButton = css`
 	height: 4vh;
 `
 
-const AssetModal = ({asset, contract, isOpen, close, updateCheck}) => {
+const AssetModal = ({asset, contract, pinata, isOpen, close}) => {
 	const [account, setAccount] = useRecoilState(accountState);
 
-	const buyToken = () => {
-		//구매 로직 작성
-		//purchase컨트랙트, 내 계좌, 토큰 id, 토큰 주인 계좌(메타)
-		//구매했으면 메타데이터 수정
-		console.log("buy is clicked!!")
-		updateCheck()
+	const buyToken = async () => {
+		console.log("buy is clicked!!")		
+		console.log('account : ', account)
+		const seller = asset.metadata.keyvalues.account
+		console.log('seller : ', seller)
+		const tokenID = asset.metadata.keyvalues.tokenID
+		console.log("ID : ",tokenID)
+		const price = asset.metadata.keyvalues.price
+		console.log("price : ",price)
+
+		await contract.methods.purchase(account,seller,tokenID).send({ from: account, value: (price*1e18)})
+
+		const updateAccount = {
+			keyvalues: {
+				account: account
+			}
+		}
+		await pinata.hashMetadata(asset.ipfs_pin_hash, updateAccount)
+		close()
 	};
 
 
@@ -45,7 +58,9 @@ const AssetModal = ({asset, contract, isOpen, close, updateCheck}) => {
 			style={customStyles}
 			onRequestClose={close}
 			contentLabel="Example Modal"
-		>
+		>	
+
+
 			<h1>세부정보</h1>
 			<h2>제목 : {asset.metadata.name}</h2>
 			<h2>아티스트 : {asset.metadata.keyvalues.author}</h2>

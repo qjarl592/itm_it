@@ -10,7 +10,7 @@ import { set } from 'react-hook-form';
 const Profile = ({contract, pinata}) => {
 	const [myAssets, setMyAssets]=useState({});
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [flag, setFlag] = useState(false)
+	const [flag, setFlag] = useState(false);
 	const [account, setAccount] = useRecoilState(accountState);
 
 
@@ -30,10 +30,13 @@ const Profile = ({contract, pinata}) => {
 		setMyAssets(tokens.rows)
 	}
 
+	useEffect(()=>{
+		setFlag(true)
+	},[])
+
 	useEffect(() => {
-		console.log("change")
+		console.log("falg cahnge")
 		fetchPinned()
-		console.log("myasset:",myAssets)
 		setFlag(false)
 	},[account, flag]);
 
