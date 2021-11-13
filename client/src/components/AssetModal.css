@@ -16,6 +16,11 @@
     left: 50%;
     right: auto;
     bottom: auto;
-    /*marginRight: -50%;*/
-    /*transform: translate(-50%, -50%);*/
+    width: 80vh;
+    height: 600px;
+    marginRight: -50%;
+    overflow: scroll;
+    border-radius: 1rem;
+
+    transform: translate(-50%, -50%);
 }
