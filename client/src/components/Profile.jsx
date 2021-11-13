@@ -4,27 +4,37 @@ import CreateNftForm from "./CreateNFTForm";
 import {useRecoilState} from "recoil";
 import {accountState} from "../state/state";
 import Asset from "./Asset";
+import { set } from 'react-hook-form';
 
 const Profile = ({contract, pinata}) => {
 	const [myAssets, setMyAssets]=useState({});
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [accounts, setAccounts] = useRecoilState(accountState);
+	const [flag, setFlag] = useState(false)
+	const [account, setAccount] = useRecoilState(accountState);
 
-	useEffect(() => {
+
+	const fetchPinned = async () => {
 		const filter = {
 			status: 'pinned',
 			metadata: {
 				keyvalues: {
 					account: {
-						value: accounts.toString(),
+						value: account,
 						op: 'eq'
 					}
 				}
 			}
 		}
-		const tokens = pinata.pinList(filter);
-		setMyAssets(tokens.rows);
-	},[accounts]);
+		const tokens = await pinata.pinList(filter);
+		setMyAssets(tokens.rows)
+	}
+
+	useEffect(() => {
+		console.log("change")
+		fetchPinned()
+		console.log("myasset:",myAssets)
+		setFlag(false)
+	},[account, flag]);
 
 	const openModal = () => {
 		setIsModalOpen(true);
@@ -33,14 +43,15 @@ const Profile = ({contract, pinata}) => {
 	const closeModal = () => {
 		setIsModalOpen(false);
 	};
-	console.log(myAssets);
+
+
 	return(
 		<div>
 			<button onClick={openModal}>NFT 생성하기</button>
-			<CreateNftForm isModalOpen={isModalOpen} closeModal={closeModal} accounts={accounts} contract={contract} pinata={pinata}/>
-			{/*{Object.keys(myAssets).map(key => (*/}
-			{/*	<Asset asset={myAssets[key]}/>*/}
-			{/*))};*/}
+			<CreateNftForm isModalOpen={isModalOpen} closeModal={closeModal} setFlag={setFlag} contract={contract} pinata={pinata}/>
+			{Object.keys(myAssets).map(key => (
+				<Asset asset={myAssets[key]}/>
+			))};
 		</div>
 	)
 }
