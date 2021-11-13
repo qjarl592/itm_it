@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import {css,jsx} from "@emotion/react";
 import React from 'react';
+import {useRecoilState} from "recoil";
+import {accountState} from "../state/state";
 import Modal from 'react-modal';
 import './AssetModal.css';
 import {Colors} from "../colors/Colors";
@@ -24,9 +26,14 @@ const purchaseButton = css`
 	height: 4vh;
 `
 
-const AssetModal = ({asset, contract, purchaseContract, isOpen, isUpdateDone, close, updateCheck}) => {
-	console.log(contract);
+const AssetModal = ({asset, contract, isOpen, close, updateCheck}) => {
+	const [account, setAccount] = useRecoilState(accountState);
+
 	const buyToken = () => {
+		//구매 로직 작성
+		//purchase컨트랙트, 내 계좌, 토큰 id, 토큰 주인 계좌(메타)
+		//구매했으면 메타데이터 수정
+		console.log("buy is clicked!!")
 		updateCheck()
 	};
 

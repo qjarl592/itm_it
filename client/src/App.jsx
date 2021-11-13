@@ -41,7 +41,6 @@ const pinataObj = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.RE
 const App = () => {
     const [account, setAccount] = useRecoilState(accountState);
     const [ERC721Contract, setERC721Contract] = useState();
-    const [purchaseContract, setPurchaseContract] = useState();
     const [pinata, setPinata] = useState(pinataObj)
 
     useEffect(()=>{
@@ -58,13 +57,7 @@ const App = () => {
                 ERC_721.abi,
                 deployedNetwork && deployedNetwork.address,
             );
-            const purchase = await new web.eth.Contract(
-                Purchase.abi,
-                deployedNetwork && deployedNetwork.address
-            )
-            setPurchaseContract(purchase);
-            const myAccount = accounts[0]
-            setAccount(myAccount);
+            setAccount(accounts[0]);
             setERC721Contract(ERC721);
         }catch(error){
             console.log(error);
@@ -80,10 +73,10 @@ const App = () => {
                 <Switch>
                         <Layout>
                             <Route exact path="/" render ={
-                                props =>  <Market {...props} contract={ERC721Contract} purchaseContract={purchaseContract} pinata={pinata}  />}>
+                                props =>  <Market {...props} contract={ERC721Contract} pinata={pinata}  />}>
                             </Route>
                             <Route exact path="/profile" render={
-                                props => <Profile {...props} contract={ERC721Contract} purchaseContract={purchaseContract} pinata={pinata}/>} />
+                                props => <Profile {...props} contract={ERC721Contract} pinata={pinata}/>} />
                             <Route exact path='/wallet' render={
                                 props => <Wallet {...props} connectWeb3={connectWeb3}/>} />
                         </Layout>

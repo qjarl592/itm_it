@@ -3,8 +3,8 @@ import React from 'react';
 import { css, jsx } from '@emotion/react'
 import { useEffect, useState} from "react";
 import Asset from "./Asset";
-import { useRecoilState } from 'recoil';
-import { keywordState } from '../state/state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { accountState, keywordState } from '../state/state';
 
 const market= css`
 	width: 66%;
@@ -27,16 +27,17 @@ const filter={
 	metadata:{
 		name: '',
 		keyvalues: {
-			show: {
-				value: 'y',
+			state: {
+				value: 'public',
 				op: 'eq'
 			}
 		}
 	}
 }
+const Market = ({history,contract,pinata}) => {
 
-const Market = ({history,contract,purchaseContract,pinata}) => {
-
+	const account = useRecoilValue(accountState)
+    // const [account, setAccount] = useRecoilState(accountState);
 	const [keyword, setKeyword] = useRecoilState(keywordState) //검색 키워드
 	const [assets, setAssets] = useState({}); //마켓에서 보여지는 토큰들
 
@@ -52,7 +53,7 @@ const Market = ({history,contract,purchaseContract,pinata}) => {
 	return (
 		<div css={market}>
 			{Object.keys(assets).map(key => (
-				<Asset asset={assets[key]} contract={contract} purchaseContract={purchaseContract} />
+				<Asset asset={assets[key]} contract={contract} pinata={pinata} />
 			))}
 		</div>
 	)

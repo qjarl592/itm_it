@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import Modal from 'react-modal';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {css, jsx} from "@emotion/react";
 import './Modal.css';
 import {create} from "ipfs-http-client";
@@ -19,13 +19,12 @@ const modalContainer = css`
   }
 `
 
-const CreateNftForm = ({isModalOpen, closeModal, accounts, contract, pinata}) => {
+const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' });
+
+const CreateNftForm = ({isModalOpen, closeModal, setFlag, contract, pinata}) => {
     const [account, setAccount] = useRecoilState(accountState);
     const [audioBuffer, setAudioBuffer] = useState();
     const [imageBuffer, setImageBuffer] = useState();
-
-    const { create } = require('ipfs-http-client');
-    const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' });
 
     const audioCapture = (event) => {
         event.preventDefault();
@@ -46,6 +45,7 @@ const CreateNftForm = ({isModalOpen, closeModal, accounts, contract, pinata}) =>
             setImageBuffer(Buffer(reader.result));
         }
     }
+
     const titleRef= useRef();
     const authorRef = useRef();
     const descriptionRef= useRef();
@@ -63,17 +63,26 @@ const CreateNftForm = ({isModalOpen, closeModal, accounts, contract, pinata}) =>
                     description : descriptionRef.current.value || '',
                     price : priceRef.current.value || '',
                     image : 'https://gateway.pinata.cloud/ipfs/'+myImageResult.path,
-                    show: 'y',
-                    state : 'private',
+                    state : 'public',
                     account: account
                 }
             }
         }
         //pinning
-        const myAssetResult=await ipfs.add(audioBuffer);
+        const myAssetResult = await ipfs.add(audioBuffer);
         const pinataResult = await pinata.pinByHash(myAssetResult.path, options);
+        console.log(account)
+        console.log(contract)
+        const nft = await contract.methods.mint(account, pinataResult.ipfsHash).send({ from: account });
+		const tokenID = nft.events.Transfer.returnValues.tokenId
 
-        await contract.methods.mint(account, pinataResult.ipfsHash).send({ from: account });
+        const updateID = {
+			keyvalues: {
+				tokenID: tokenID,
+			}
+		}
+		await pinata.hashMetadata(myAssetResult.path, updateID)
+        setFlag(true)
     };
 
     return(
