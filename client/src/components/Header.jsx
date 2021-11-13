@@ -1,12 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 /** @jsx jsx */
-import {css, jsx} from '@emotion/react'
+import {css} from '@emotion/react'
 import { useHistory } from 'react-router-dom'
-import {WebDispatch} from "../App";
-import {useContext} from "react";
-import Market from "./Market";
 import { useRecoilState } from 'recoil';
-import { keywordState } from '../state/state';
+import {accountState, keywordState} from '../state/state';
 
 const header= css`
 	width: 100%;
@@ -76,17 +73,13 @@ const button =css`
 
 const Header = (props) => {
 
-
+	const [accounts, setAccounts] = useRecoilState(accountState);
 	const [keyword, setKeyword] = useRecoilState(keywordState)
 	const keywordRef = useRef()
 
-	const {state, dispatch} = useContext(WebDispatch);
-	const [userInput, setUserInput] = useState();
-	const [filter, setFilter] = useState();
-
 	let history= useHistory();
 	const goProfile=()=>{
-		if(state){
+		if(accounts){
 			history.push("/profile")
 		}else{
 			history.push("/wallet");
@@ -106,7 +99,7 @@ const Header = (props) => {
 			</a>
 			<div css={searchWindow}>
 				<img src="images/SVG/Search.svg" alt="" onClick={search}/>
-				<input ref ={keywordRef} id="input" type="text" ></input>
+				<input ref ={keywordRef} id="input" type="text" />
 			</div>
 			<ul css={buttons}>
 				<li className="profile"><button onClick={goProfile}><img src="images/SVG/Profile.svg" alt="" /></button></li>

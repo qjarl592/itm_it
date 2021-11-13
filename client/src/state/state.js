@@ -3,7 +3,7 @@ import getWeb3 from "../service/getWeb3";
 
 export const accountState = atom({
     key: 'accountState',
-    default : []
+    default : "initial"
 })
 
 export const contractState = atom({
