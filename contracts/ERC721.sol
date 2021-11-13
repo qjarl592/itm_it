@@ -342,7 +342,17 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      *
      * Emits a {Transfer} event.
      */
- 
+    function purchase(address buyer, address payable seller, uint256 tokenId) public payable {
+        require(msg.sender == buyer);
+        require(msg.sender != seller, "you can't buy your own token");
+        require(seller == ownerOf(tokenId));
+
+        _approve(buyer, tokenId);
+
+        seller.transfer(msg.value);
+
+        safeTransferFrom(seller, buyer, tokenId);
+    }
 
     function burn(uint256 tokenId) external {
         require(_exists(tokenId), "ERC721: operator query for nonexistent token");
