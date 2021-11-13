@@ -3,6 +3,7 @@ import { useEffect, useState} from "react";
 import CreateNftForm from "./CreateNFTForm";
 import {useRecoilState} from "recoil";
 import {accountState} from "../state/state";
+import Modal from 'react-modal';
 import Asset from "./Asset";
 
 const Profile = ({contract, pinata}) => {
