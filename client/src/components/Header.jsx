@@ -4,6 +4,8 @@ import {css, jsx } from '@emotion/react'
 import { useHistory } from 'react-router-dom'
 import {useRecoilState, useRecoilValue} from 'recoil';
 import {accountState, keywordState} from '../state/state';
+import getWeb3 from "../service/getWeb3";
+
 
 const header= css`
 	width: 100%;
@@ -73,7 +75,7 @@ const button =css`
 
 const Header = () => {
 
-	const account = useRecoilValue(accountState);
+    const [account, setAccount] = useRecoilState(accountState);
 	const [keyword, setKeyword] = useRecoilState(keywordState)
 	const keywordRef = useRef()
 
@@ -96,6 +98,13 @@ const Header = () => {
 		history.push("/")
 	};
 
+	const getAccounts = async () => {
+        const web = await getWeb3();
+        const accounts = await web.eth.getAccounts();
+        setAccount(accounts[0]);
+		console.log(account)
+    }
+
 	return(
 		<div css={header} className="app-header">
 			<img src="images/Logo.png" alt="" onClick={onLogo} />
@@ -105,7 +114,7 @@ const Header = () => {
 			</div>
 			<ul css={buttons}>
 				<li className="profile"><button onClick={goProfile}><img src="images/SVG/Profile.svg" alt="" /></button></li>
-				<li className="wallet"><button><img src="images/SVG/Wallet.svg" alt="" /></button></li>
+				<li className="wallet"><button onClick={getAccounts}><img src="images/SVG/Wallet.svg" alt="" /></button></li>
 			</ul>
 		</div>
 	)

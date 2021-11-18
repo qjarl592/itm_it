@@ -22,7 +22,7 @@ const assetStyle = css`
 	}
 `
 
-const Asset = ({asset, contract, pinata}) => {
+const Asset = ({asset, contract, pinata, setFlag, exchangeRate}) => {
 	const baseURL = 'https://gateway.pinata.cloud/ipfs/';
 	const [isModalOpen, setIsModalOpen] = useState(false); //모달창이 열렸는가?
 	const [isUpdateDone, setIsUpdateDone] = useState(false); //구매완료가 되었는가?
@@ -43,13 +43,13 @@ const Asset = ({asset, contract, pinata}) => {
 	return (
 		<li css={assetStyle} className="asset">
 			<img src={asset.metadata.keyvalues.image} alt="asset" onClick={openModal}/>
-			<AssetModal asset={asset} contract={contract} isOpen={isModalOpen} close={closeModal} pinata={pinata}/>
+			<AssetModal asset={asset} contract={contract} isOpen={isModalOpen} close={closeModal} pinata={pinata} setFlag={setFlag}/>
 			<div className="info">
 				<h2>{asset.metadata.name}</h2>
 				<audio controls>
 					<source src={baseURL+asset.ipfs_pin_hash}/>
 				</audio>
-				<h3>{asset.metadata.keyvalues.price} ETH</h3>
+				<h3>{asset.metadata.keyvalues.price} ETH (Approx. {Math.floor(Number(asset.metadata.keyvalues.price)*exchangeRate)} 원)</h3>
 			</div>
 		</li>
 	)
