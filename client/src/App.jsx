@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react'
-import React, { createContext, useEffect, useReducer, useState} from "react";
+import React, { createContext, useEffect, useState} from "react";
 import ERC_721 from "./contracts/ERC721.json";
-import Purchase from "./contracts/Purchase.json"
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Market from './components/Market';
 import Layout from './components/Layout';
@@ -49,6 +48,7 @@ const App = () => {
 
     const connectWeb3 =async ()=>{
         try{
+            console.time("calculatingTime")
             const web = await getWeb3();
             const accounts = await web.eth.getAccounts();
             const networkId = await web.eth.net.getId();
@@ -57,6 +57,7 @@ const App = () => {
                 ERC_721.abi,
                 deployedNetwork && deployedNetwork.address,
             );
+            console.timeEnd("calculatingTime")
             setAccount(accounts[0]);
             setERC721Contract(ERC721);
         }catch(error){
