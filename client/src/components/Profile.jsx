@@ -51,7 +51,7 @@ const Profile = ({contract, pinata}) => {
 			<button onClick={openModal}>NFT 생성하기</button>
 			<CreateNftForm isModalOpen={isModalOpen} closeModal={closeModal} setFlag={setFlag} contract={contract} pinata={pinata}/>
 			{Object.keys(myAssets).map(key => (
-				<Asset key={key} asset={myAssets[key]}/>
+				<Asset key={key} asset={myAssets[key]} contract={contract} pinata={pinata} setFlag={setFlag}/>
 			))};
 		</div>
 	)

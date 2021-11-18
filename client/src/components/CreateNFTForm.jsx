@@ -73,6 +73,7 @@ const CreateNftForm = ({isModalOpen, closeModal, setFlag, contract, pinata}) => 
         const pinataResult = await pinata.pinByHash(myAssetResult.path, options);
 
         const nft = await contract.methods.mint(account, pinataResult.ipfsHash).send({ from: account });
+        console.log(nft)
 		const tokenID = nft.events.Transfer.returnValues.tokenId
 
         const updateID = {

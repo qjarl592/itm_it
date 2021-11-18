@@ -24,7 +24,7 @@ const assetStyle = css`
 	}
 `
 
-const Asset = ({asset, contract, pinata}) => {
+const Asset = ({asset, contract, pinata, setFlag, exchangeRate}) => {
 	const baseURL = 'https://gateway.pinata.cloud/ipfs/';
 	const [isModalOpen, setIsModalOpen] = useState(false); //모달창이 열렸는가?
 	let history = useHistory();
@@ -50,7 +50,7 @@ const Asset = ({asset, contract, pinata}) => {
 				<audio controls>
 					<source src={baseURL + asset.ipfs_pin_hash}/>
 				</audio>
-				<h3>{asset.metadata.keyvalues.price} ETH</h3>
+				<h3>{asset.metadata.keyvalues.price} ETH (Approx. {Math.floor(Number(asset.metadata.keyvalues.price)*exchangeRate)} 원)</h3>
 			</div>
 		</li>
 	);
