@@ -3,9 +3,7 @@ import { useEffect, useState} from "react";
 import CreateNftForm from "./CreateNFTForm";
 import {useRecoilState} from "recoil";
 import {accountState} from "../state/state";
-import Modal from 'react-modal';
 import Asset from "./Asset";
-import { set } from 'react-hook-form';
 
 const Profile = ({contract, pinata}) => {
 	const [myAssets, setMyAssets]=useState({});
@@ -53,7 +51,7 @@ const Profile = ({contract, pinata}) => {
 			<button onClick={openModal}>NFT 생성하기</button>
 			<CreateNftForm isModalOpen={isModalOpen} closeModal={closeModal} setFlag={setFlag} contract={contract} pinata={pinata}/>
 			{Object.keys(myAssets).map(key => (
-				<Asset asset={myAssets[key]}/>
+				<Asset key={key} asset={myAssets[key]}/>
 			))};
 		</div>
 	)

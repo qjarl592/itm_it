@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { accountState, keywordState } from '../state/state';
 
 const market= css`
-	width: 66%;
+	width: 100%;
 	height: 100%;
 	background-color: white;
 	box-shadow: 6px 0px 6px 2px rgba(217, 217, 217, 1);
@@ -53,7 +53,7 @@ const Market = ({history,contract,pinata}) => {
 	return (
 		<div css={market}>
 			{Object.keys(assets).map(key => (
-				<Asset asset={assets[key]} contract={contract} pinata={pinata} />
+				<Asset key={key} asset={assets[key]} contract={contract} pinata={pinata} />
 			))}
 		</div>
 	)
