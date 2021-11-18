@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import Modal from 'react-modal';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {css, jsx} from "@emotion/react";
 import './Modal.css';
 import {create} from "ipfs-http-client";
