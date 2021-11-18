@@ -95,6 +95,8 @@ const Header = () => {
 	};
 
 	const onLogo = () => {
+		keywordRef.current.value = ''
+		setKeyword(keywordRef.current.value);
 		history.push("/")
 	};
 
