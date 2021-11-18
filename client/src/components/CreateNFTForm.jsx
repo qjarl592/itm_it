@@ -49,7 +49,6 @@ const CreateNftForm = ({isModalOpen, closeModal, setFlag, contract, pinata}) => 
     const titleRef= useRef();
     const authorRef = useRef();
     const descriptionRef= useRef();
-    const priceRef= useRef();
 
     const createToken = async () => {
         const myImageResult=await ipfs.add(imageBuffer);
@@ -61,9 +60,8 @@ const CreateNftForm = ({isModalOpen, closeModal, setFlag, contract, pinata}) => 
                 keyvalues: {
                     author: authorRef.current.value || '',
                     description : descriptionRef.current.value || '',
-                    price : priceRef.current.value || '',
                     image : 'https://gateway.pinata.cloud/ipfs/'+myImageResult.path,
-                    state : 'public',
+                    state : 'private',
                     account: account
                 }
             }
@@ -107,11 +105,6 @@ const CreateNftForm = ({isModalOpen, closeModal, setFlag, contract, pinata}) => 
                     <input ref={authorRef} type="text" id="setAuthor" size="71" placeholder="아티스트를 입력해주세요."/>
                     <li>설명</li>
                     <textarea ref={descriptionRef} id="setDescription" cols="63" rows="10" placeholder="아이템에 대한 추가적인 설명을 작성해주세요."/>
-                    <li>가격</li>
-                    <div>
-                        <input ref={priceRef} type="text" id="setPrice" size="65" placeholder="가격을 입력해주세요."/>
-                        <span>ETH</span>
-                    </div>
                     <input type="button" id="create" value="업로드하기" onClick={createToken}/>
                 </ul>
             </Modal>

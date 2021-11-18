@@ -42,7 +42,7 @@ const Asset = ({asset, contract, pinata, setFlag, exchangeRate}) => {
 			<img src={asset.metadata.keyvalues.image} alt="asset" onClick={openModal}/>
 			{
 				pathname === "/profile"
-					? <ProfileAssetModal asset={asset} contract={contract} isOpen={isModalOpen} close={closeModal} pinata={pinata}/>
+					? <ProfileAssetModal asset={asset} contract={contract} isOpen={isModalOpen} close={closeModal} pinata={pinata} setFlag={setFlag}/>
 					: <AssetModal asset={asset} contract={contract} isOpen={isModalOpen} close={closeModal} pinata={pinata}/>
 			}
 			<div className="info">

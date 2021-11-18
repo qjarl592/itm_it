@@ -3,6 +3,8 @@ import {css,jsx} from "@emotion/react";
 import React, {useRef, useState} from 'react';
 import Modal from "react-modal";
 import {Colors} from "../colors/Colors";
+import {useRecoilState} from "recoil";
+import {accountState} from "../state/state";
 
 const customStyles = {
     content: {
@@ -26,18 +28,56 @@ const assetInfo = css`
     list-style: none;
   }
 `
-const ProfileAssetModal = ({asset, isOpen, close}) =>{
+const ProfileAssetModal = ({asset, isOpen, close, pinata, setFlag, contract}) =>{
+    const [account, setAccount] = useRecoilState(accountState);
+
     const {name} = asset.metadata
     const { author, description, price, state} = asset.metadata.keyvalues;
     const [selected, setSelected] = useState(state);
     const priceRef = useRef();
     const descriptionRef = useRef();
+
     const onPublic = () => {
         setSelected("public")
     };
+
     const onPrivate = () => {
        setSelected("private")
     };
+
+
+    const updateToken = async () => {
+		console.log('update click')
+		const newDescription = descriptionRef.current.value || ''
+		const newState = selected
+
+		const newMeta = {
+			keyvalues: {
+				description: newDescription,
+                state: newState,
+                price: null
+			}
+		}
+
+		if(newState == 'public') {
+            const newPrice = priceRef.current.value || ''
+			newMeta['keyvalues']['price'] = newPrice
+		}
+
+		await pinata.hashMetadata(asset.ipfs_pin_hash, newMeta)
+		setFlag(true)
+		close()
+	}
+
+	const deleteToken = async () => {
+		console.log('delete click')
+		const tokenID = asset.metadata.keyvalues.tokenID
+		await contract.methods.burn(tokenID).send({ from: account })
+		await pinata.unpin(asset.ipfs_pin_hash)
+		setFlag(true)
+		close()
+	}
+
     return (
         <div>
             <Modal
@@ -80,7 +120,8 @@ const ProfileAssetModal = ({asset, isOpen, close}) =>{
                             </div>
                         }
                     </li>
-                    <input css={editButton} type="button" id="buy" value="수정하기"/>
+                    <input css={editButton} onClick={updateToken} type="button" id="update" value="수정하기"/>
+                    <input css={editButton} onClick={deleteToken} type="button" id="delete" value="삭제하기"/>
                 </ul>
             </Modal>
         </div>
