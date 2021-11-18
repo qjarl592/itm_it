@@ -30,14 +30,9 @@ const AssetModal = ({asset, contract, pinata, isOpen, close}) => {
 	const [account, setAccount] = useRecoilState(accountState);
 
 	const buyToken = async () => {
-		console.log("buy is clicked!!")		
-		console.log('account : ', account)
 		const seller = asset.metadata.keyvalues.account
-		console.log('seller : ', seller)
 		const tokenID = asset.metadata.keyvalues.tokenID
-		console.log("ID : ",tokenID)
 		const price = asset.metadata.keyvalues.price
-		console.log("price : ",price)
 
 		await contract.methods.purchase(account,seller,tokenID).send({ from: account, value: (price*1e18)})
 
@@ -58,9 +53,7 @@ const AssetModal = ({asset, contract, pinata, isOpen, close}) => {
 			style={customStyles}
 			onRequestClose={close}
 			contentLabel="Example Modal"
-		>	
-
-
+		>
 			<h1>세부정보</h1>
 			<h2>제목 : {asset.metadata.name}</h2>
 			<h2>아티스트 : {asset.metadata.keyvalues.author}</h2>

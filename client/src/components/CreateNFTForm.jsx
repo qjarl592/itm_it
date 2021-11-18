@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import Modal from 'react-modal';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {css, jsx} from "@emotion/react";
 import './Modal.css';
 import {create} from "ipfs-http-client";
@@ -53,7 +53,7 @@ const CreateNftForm = ({isModalOpen, closeModal, setFlag, contract, pinata}) => 
 
     const createToken = async () => {
         const myImageResult=await ipfs.add(imageBuffer);
-        await console.log(pinata.pinByHash(myImageResult.path));
+        await pinata.pinByHash(myImageResult.path);
 
         const options={
             pinataMetadata: {
