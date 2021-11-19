@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react'
-import React, { createContext, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import ERC_721 from "./contracts/ERC721.json";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Market from './components/Market';
@@ -14,25 +14,6 @@ import {accountState} from "./state/state";
 const app=css`
   height: 100vh;
 `
-
-export const WebDispatch = createContext({});
-
-const reducer = (state, action) =>{
-    switch (action.type) {
-        case 'setMethod':
-            return{
-                ...state,
-                methods: action.methods
-            };
-        case 'setAccount':
-            return {
-                ...state,
-                accounts: action.accounts
-            }
-        default:
-            return state;
-    }
-}
 
 const pinataSDK = require('@pinata/sdk');
 const pinataObj = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.REACT_APP_PINATA_SECRET_KEY);
