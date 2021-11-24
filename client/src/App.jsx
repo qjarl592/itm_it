@@ -22,10 +22,21 @@ const App = () => {
     const [account, setAccount] = useRecoilState(accountState);
     const [ERC721Contract, setERC721Contract] = useState();
     const [pinata, setPinata] = useState(pinataObj)
+    const [exchangeRate, setExchangeRate] = useState()
 
     useEffect(()=>{
         connectWeb3();
+        getRate()
     },[])
+
+    const getRate = async () => {
+		const response = await fetch('https://api.coingecko.com/api/v3/exchange_rates');
+		const result = await response.json(); 
+		const eth = Number(result.rates.eth.value)
+		const krw = Number(result.rates.krw.value)
+		const rate = krw/eth
+		setExchangeRate(rate)
+	}
 
     const connectWeb3 =async ()=>{
         try{
@@ -55,10 +66,10 @@ const App = () => {
                 <Switch>
                         <Layout>
                             <Route exact path="/" render ={
-                                props =>  <Market {...props} contract={ERC721Contract} pinata={pinata}  />}>
+                                props =>  <Market {...props} exchangeRate={exchangeRate} contract={ERC721Contract} pinata={pinata}  />}>
                             </Route>
                             <Route exact path="/profile" render={
-                                props => <Profile {...props} contract={ERC721Contract} pinata={pinata}/>} />
+                                props => <Profile {...props} exchangeRate={exchangeRate} contract={ERC721Contract} pinata={pinata}/>} />
                             <Route exact path='/wallet' render={
                                 props => <Wallet {...props} connectWeb3={connectWeb3}/>} />
                         </Layout>
