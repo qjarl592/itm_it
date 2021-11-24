@@ -87,9 +87,15 @@ const Header = () => {
 			history.push("/wallet");
 		}
 	}
-
+	const onKeyPress = (event) => {
+		if (event.key === 'Enter'){
+			search();
+		}
+	}
+	const onClick =()=>{
+		search()
+	}
 	const search = (event) => {
-		event.preventDefault();
 		setKeyword(keywordRef.current.value);
 		history.push("/");
 	};
@@ -111,8 +117,8 @@ const Header = () => {
 		<div css={header} className="app-header">
 			<img src="images/Logo.png" alt="" onClick={onLogo} css={logo}/>
 			<div css={searchWindow}>
-				<img src="images/SVG/Search.svg" alt="" onClick={search}/>
-				<input ref ={keywordRef} id="input" type="text" />
+				<img src="images/SVG/Search.svg" alt="" onClick={onClick}/>
+				<input ref ={keywordRef} id="input" type="text" onKeyDown={onKeyPress} />
 			</div>
 			<ul css={buttons}>
 				<li className="profile"><button onClick={goProfile}><img src="images/SVG/Profile.svg" alt="" /></button></li>
