@@ -1,4 +1,6 @@
 #dependecy directories
 node_modules/
-/client/.env
+client/.env
 /.secret
+
+/client/src/contracts/
