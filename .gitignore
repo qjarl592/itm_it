@@ -2,3 +2,5 @@
 node_modules/
 /client/.env
 /.secret
+
+/client/src/contracts/
