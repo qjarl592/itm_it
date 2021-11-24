@@ -32,7 +32,9 @@ const assetStyle = css`
 	list-style: none;
 	width: 260px;
 	height: 350px;
-	padding: 1.2em;
+	padding: 1.3em;
+	margin: 0.5em;
+	margin-top: 2em;
 	border-radius: 1em;
 	box-shadow: 4px 2px 4px 2px rgba(217, 217, 217, 217);
 	img{

@@ -55,7 +55,7 @@ const App = () => {
                 <Switch>
                         <Layout>
                             <Route exact path="/" render ={
-                                props =>  <Market {...props} contract={ERC721Contract} pinata={pinata}  />}>
+                                props => <Market {...props} contract={ERC721Contract} pinata={pinata}/>}>
                             </Route>
                             <Route exact path="/profile" render={
                                 props => <Profile {...props} contract={ERC721Contract} pinata={pinata}/>} />

@@ -10,10 +10,10 @@ const market= css`
 	margin-top: 1em;
 	left: 50%;
 	transform: translate(-50%);
-	width: 90%;
+	width: 95%;
 	height: 100%;
 	background-color: white;
-	box-shadow: 6px 0px 6px 2px rgba(217, 217, 217, 1);
+	box-shadow: 0px 0px 6px 6px rgba(217, 217, 217, 1);
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: left;
@@ -43,7 +43,6 @@ const Market = ({contract,pinata}) => {
 		const eth = Number(result.rates.eth.value)
 		const krw = Number(result.rates.krw.value)
 		const rate = krw/eth
-		console.log(rate)
 		setExchangeRate(rate)
 	}
 

@@ -70,6 +70,7 @@ const Profile = ({contract, pinata}) => {
 			}
 		}
 		const tokens = await pinata.pinList(filter);
+		console.log(tokens)
 		setMyAssets(tokens.rows)
 	}
 
