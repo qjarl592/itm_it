@@ -67,9 +67,9 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
         return
-            interfaceId == type(IERC721).interfaceId ||
-            interfaceId == type(IERC721Metadata).interfaceId ||
-            super.supportsInterface(interfaceId);
+        interfaceId == type(IERC721).interfaceId ||
+        interfaceId == type(IERC721Metadata).interfaceId ||
+        super.supportsInterface(interfaceId);
     }
 
     /**
@@ -125,7 +125,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
         */
 
         return ipfsHashAddr;
-    }   
+    }
 
     function getAllTokensHash() public view returns (string [] memory) {
         string [] memory result = new string[](_tokenIdList.length);
@@ -289,7 +289,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      * Tokens start existing when they are minted (`_mint`),
      * and stop existing when they are burned (`_burn`).
      */
-    function _exists(uint256 tokenId) internal view virtual returns (bool) {
+    function _exists(uint256 tokenId) public view virtual returns (bool) {
         return _owners[tokenId] != address(0);
     }
 
@@ -306,7 +306,11 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
         return (spender == owner || getApproved(tokenId) == spender || isApprovedForAll(owner, spender));
     }
 
-    function mint(address to, string calldata ipfsHash) external returns (uint256) {
+    function curId() public view returns (uint256) {
+        return _tokenIds.current();
+    }
+
+    function mint(address to, string calldata ipfsHash) external {
         require(to != address(0), "ERC721: mint to the zero address");
         require(msg.sender == to);
 
@@ -324,7 +328,6 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
         newAsset.tokenIdListIndex = _tokenIdList.length - 1;
 
         emit Transfer(address(0), to, tokenId);
-        return _tokenIds.current();
     }
 
     function _setTokenURI(uint256 tokenId, asset storage newAsset, string memory ipfsHash) internal virtual {
@@ -469,5 +472,4 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     }
 
 }
-
 
