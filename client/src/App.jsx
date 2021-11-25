@@ -27,6 +27,7 @@ const App = () => {
         connectWeb3();
     },[])
 
+    const baseURL = 'https://gateway.pinata.cloud/ipfs/';
     const connectWeb3 =async ()=>{
         try{
             console.time("calculatingTime")
@@ -40,6 +41,7 @@ const App = () => {
             );
             console.timeEnd("calculatingTime")
             setAccount(accounts[0]);
+            console.log(accounts[0])
             setERC721Contract(ERC721);
         }catch(error){
             console.log(error);
@@ -55,10 +57,10 @@ const App = () => {
                 <Switch>
                         <Layout>
                             <Route exact path="/" render ={
-                                props => <Market {...props} contract={ERC721Contract} pinata={pinata}/>}>
+                                props => <Market {...props} contract={ERC721Contract} pinata={pinata} baseURL={baseURL}/>}>
                             </Route>
                             <Route exact path="/profile" render={
-                                props => <Profile {...props} contract={ERC721Contract} pinata={pinata}/>} />
+                                props => <Profile {...props} contract={ERC721Contract} pinata={pinata} baseURL={baseURL}/>} />
                             <Route exact path='/wallet' render={
                                 props => <Wallet {...props} connectWeb3={connectWeb3}/>} />
                         </Layout>
